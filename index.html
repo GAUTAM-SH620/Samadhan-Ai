@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Samadhan AI — Solve Faster, Grow Smarter</title>
+  <meta name="description" content="Samadhan AI helps businesses automate support, capture leads, and grow sales using powerful, privacy‑first AI chatbots." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>💡</text></svg>">
+  <style>
+    :root{
+      --bg:#0b0f1a; /* deep slate */
+      --card:#101729; /* card base */
+      --muted:#8fa3c9; /* muted text */
+      --text:#eaf2ff; /* primary text */
+      --brand:#5b8cff; /* primary brand */
+      --brand-2:#24e6a6; /* accent */
+      --ring: rgba(36, 230, 166, 0.3);
+      --shadow: 0 10px 30px rgba(11,15,26,.35);
+      --radius: 18px;
+      --pad: clamp(14px, 1.2vw, 22px);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
+      background: radial-gradient(1000px 600px at 80% -10%, rgba(36,230,166,.10), transparent),
+                  radial-gradient(900px 500px at -10% 20%, rgba(91,140,255,.10), transparent),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{width:min(1200px, 94%);margin-inline:auto}
+
+    /* Navbar */
+    .nav{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(10px);
+      background:linear-gradient(to bottom, rgba(16,23,41,.85), rgba(16,23,41,.55));
+      border-bottom:1px solid rgba(143,163,201,.12);
+    }
+    .nav-wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;gap:12px;align-items:center;font-weight:700}
+    .logo{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 4px 18px rgba(91,140,255,.4)}
+    .logo span{filter:drop-shadow(0 2px 6px rgba(0,0,0,.35))}
+    .nav-links{display:flex;gap:20px;align-items:center}
+    .nav-links a{opacity:.85}
+    .nav-cta{padding:10px 14px;background:linear-gradient(135deg,var(--brand),var(--brand-2));border-radius:12px;color:#041022;font-weight:700; box-shadow: var(--shadow)}
+    .nav-toggle{display:none}
+
+    /* Hero */
+    .hero{padding:clamp(60px, 8vw, 120px) 0 64px; position:relative; overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns: 1.2fr 1fr; gap:40px; align-items:center}
+    .eyebrow{display:inline-flex;gap:8px;align-items:center;background:rgba(91,140,255,.12);border:1px solid rgba(91,140,255,.25);padding:6px 10px;border-radius:999px;color:#cfe0ff;font-size:.9rem}
+    .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--brand-2);box-shadow:0 0 0 6px var(--ring)}
+    h1{font-size: clamp(2rem, 3.6vw, 3.4rem); line-height:1.1; margin:14px 0 12px}
+    .subtitle{font-size: clamp(1rem, 1.3vw, 1.2rem); color:var(--muted); max-width:60ch}
+    .cta-row{display:flex; gap:14px; margin:22px 0 0; flex-wrap:wrap}
+    .btn{padding:12px 18px;border-radius:14px;font-weight:700;border:1px solid rgba(143,163,201,.25);box-shadow: var(--shadow)}
+    .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#041022;border:none}
+    .trust-row{display:flex;gap:14px; align-items:center; margin-top:22px; color:var(--muted);font-size:.95rem}
+    .trust-badges{display:flex;gap:10px;opacity:.9}
+    .badge{padding:6px 10px;border:1px solid rgba(143,163,201,.25); border-radius:999px}
+
+    /* Mock panel */
+    .mock{
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid rgba(143,163,201,.2); border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:20px; position:relative; overflow:hidden
+    }
+    .mock .bar{display:flex; gap:8px; margin-bottom:16px}
+    .mock .dot{width:10px;height:10px;border-radius:50%}
+    .mock .dot.r{background:#ff5f56}.mock .dot.y{background:#ffbd2e}.mock .dot.g{background:#27c93f}
+    .chat{display:flex; flex-direction:column; gap:10px}
+    .bubble{max-width:85%; padding:12px 14px;border-radius:14px}
+    .bubble.user{ align-self:flex-end; background:rgba(91,140,255,.25); border:1px solid rgba(91,140,255,.35)}
+    .bubble.ai{ align-self:flex-start; background:rgba(36,230,166,.18); border:1px solid rgba(36,230,166,.30)}
+
+    /* Sections */
+    section{padding:72px 0}
+    .section-title{font-size: clamp(1.6rem, 2.4vw, 2.2rem); margin:0 0 14px}
+    .section-sub{color:var(--muted); margin:0 0 26px}
+
+    /* Features */
+    .features{display:grid; grid-template-columns: repeat(3, 1fr); gap:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); padding:22px; border-radius: var(--radius); border:1px solid rgba(143,163,201,.18); box-shadow: var(--shadow)}
+    .card h3{margin:0 0 6px}
+    .kpi{display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; margin-top:18px}
+    .kpi .tile{background:#0d1424;border:1px dashed rgba(143,163,201,.25); border-radius:14px; padding:14px; text-align:center}
+    .kpi .num{font-size:1.4rem; font-weight:800}
+
+    /* Use cases */
+    .usecases{display:grid; grid-template-columns: repeat(3, 1fr); gap:18px}
+    .usecase{padding:18px;border:1px solid rgba(143,163,201,.18); border-radius: var(--radius); background:#0e1626}
+
+    /* Pricing */
+    .pricing-grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; align-items:stretch}
+    .price-card{position:relative}
+    .price-card.popular{outline:2px solid var(--brand);}
+    .price-h{font-size:2.2rem; margin:12px 0}
+    .price{display:flex; align-items:flex-end; gap:6px}
+    .price .amt{font-size:2.4rem; font-weight:900}
+    .price .per{color:var(--muted)}
+    .switch{display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(143,163,201,.25); border-radius:999px; padding:6px 10px}
+    .switch input{appearance:none; width:36px; height:22px; background:#1b2946; border-radius:999px; position:relative; outline:none; cursor:pointer}
+    .switch input::after{content:""; position:absolute; width:16px; height:16px; top:3px; left:4px; background:#cfe0ff; border-radius:50%; transition:all .2s}
+    .switch input:checked::after{left:16px; background:#24e6a6}
+
+    /* FAQ */
+    .faq{display:grid; gap:12px}
+    .faq-item{border:1px solid rgba(143,163,201,.2); border-radius:14px; overflow:hidden}
+    .faq-q{display:flex; justify-content:space-between; align-items:center; padding:16px 18px; cursor:pointer; background:#0f172a}
+    .faq-a{padding:0 18px 16px; color:var(--muted); display:none}
+
+    /* CTA + Footer */
+    .cta{display:flex; gap:18px; flex-wrap:wrap; align-items:center; justify-content:space-between; background:linear-gradient(135deg, rgba(91,140,255,.20), rgba(36,230,166,.20)); border:1px solid rgba(143,163,201,.25); padding:22px; border-radius: var(--radius)}
+    footer{color:var(--muted); border-top:1px solid rgba(143,163,201,.12); padding:24px 0 60px}
+
+    /* Utilities */
+    .grid-2{display:grid; grid-template-columns: 1.2fr 1fr; gap:24px}
+    .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .chip{padding:6px 10px;border-radius:999px;border:1px solid rgba(143,163,201,.25)}
+    .list{display:grid; gap:10px; margin:12px 0 0}
+    .list li{display:flex; gap:8px}
+    .ok{width:18px;height:18px;border-radius:50%;display:inline-grid;place-items:center;background:linear-gradient(135deg,var(--brand),var(--brand-2)); color:#041022; font-size:14px; font-weight:900}
+
+    /* Forms */
+    .form{display:grid; gap:12px}
+    input, textarea{
+      background:#0d1424; border:1px solid rgba(143,163,201,.25); color:var(--text);
+      padding:12px 14px; border-radius:12px; outline:none
+    }
+    input:focus, textarea:focus{box-shadow:0 0 0 6px var(--ring); border-color:var(--brand-2)}
+
+    /* Responsive */
+    @media (max-width: 950px){
+      .hero-grid, .grid-2 { grid-template-columns: 1fr }
+      .features{grid-template-columns: 1fr 1fr}
+      .usecases{grid-template-columns: 1fr 1fr}
+      .pricing-grid{grid-template-columns: 1fr;}
+      .nav-links{display:none}
+      .nav-toggle{display:block;background:transparent;border:1px solid rgba(143,163,201,.25); padding:8px 10px;border-radius:10px;color:var(--text)}
+      .mobile-menu{display:none; position:absolute; top:60px; right:3%; width:min(320px, 94%); background:#0e1626; border:1px solid rgba(143,163,201,.2); border-radius:14px; box-shadow: var(--shadow)}
+      .mobile-menu a{display:block; padding:14px 16px; border-bottom:1px solid rgba(143,163,201,.12)}
+      .mobile-menu a:last-child{border-bottom:0}
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="nav">
+    <div class="container nav-wrap">
+      <a class="brand" href="#home">
+        <div class="logo"><span>⚙️</span></div>
+        <span>Samadhan <span style="opacity:.7">AI</span></span>
+      </a>
+      <div class="nav-links" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#use-cases">Use Cases</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact" class="nav-cta">Get Demo</a>
+      </div>
+      <button class="nav-toggle" aria-label="Menu" id="menuBtn">☰</button>
+      <div class="mobile-menu" id="mobileMenu" role="menu">
+        <a href="#features">Features</a>
+        <a href="#use-cases">Use Cases</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Get Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero" id="home">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Solve faster. Grow smarter.</div>
+        <h1>Automate support and sales with <span style="background:linear-gradient(135deg,var(--brand),var(--brand-2)); -webkit-background-clip:text;background-clip:text;color:transparent">Samadhan AI</span></h1>
+        <p class="subtitle">Deploy a privacy‑first AI assistant on your website, WhatsApp, and apps. Answer FAQs, qualify leads, and hand off to humans—24×7.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#contact">Request a Live Demo</a>
+          <a class="btn" href="#features">Explore Features</a>
+        </div>
+        <div class="trust-row">
+          <div class="trust-badges">
+            <span class="badge">ISO‑ready</span>
+            <span class="badge">GDPR‑aware</span>
+            <span class="badge">99.9% Uptime</span>
+          </div>
+          <span>Trusted by startups & SMEs</span>
+        </div>
+      </div>
+      <div>
+        <div class="mock" aria-label="Chat demo">
+          <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+          <div class="chat">
+            <div class="bubble ai">Hi! I'm the Samadhan AI assistant. How can I help you today?</div>
+            <div class="bubble user">Show your pricing and WhatsApp integration.</div>
+            <div class="bubble ai">Sure! We offer Starter, Growth, and Business plans. WhatsApp integration takes ~5 minutes with our guided setup.</div>
+            <div class="bubble user">Can I train it on my PDFs?</div>
+            <div class="bubble ai">Yes—upload files or connect Google Drive/Notion. The bot learns instantly and keeps sources cited.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="container">
+      <h2 class="section-title">Everything you need to launch an AI assistant</h2>
+      <p class="section-sub">Install in minutes. No code required. Works on Web, WhatsApp, and more.</p>
+      <div class="features">
+        <div class="card reveal">
+          <h3>No‑Code Builder</h3>
+          <p>Design conversation flows, intents, and fallbacks visually. Paste one script tag to embed.</p>
+          <ul class="list"><li><span class="ok">✓</span> Drag‑drop FAQ import</li><li><span class="ok">✓</span> Brand voice controls</li><li><span class="ok">✓</span> Human handoff</li></ul>
+        </div>
+        <div class="card reveal">
+          <h3>Omnichannel</h3>
+          <p>Deploy to your website widget, WhatsApp Business, and Instagram DMs from one dashboard.</p>
+          <ul class="list"><li><span class="ok">✓</span> Click‑to‑WhatsApp</li><li><span class="ok">✓</span> Lead capture</li><li><span class="ok">✓</span> CRM sync</li></ul>
+        </div>
+        <div class="card reveal">
+          <h3>Knowledge Engine</h3>
+          <p>Connect data sources like web pages, PDFs, and Notion. Answers come with citations.</p>
+          <ul class="list"><li><span class="ok">✓</span> File + URL ingestor</li><li><span class="ok">✓</span> Real‑time updates</li><li><span class="ok">✓</span> Safe‑reply filters</li></ul>
+        </div>
+      </div>
+
+      <div class="kpi">
+        <div class="tile"><div class="num">-40%</div><div class="muted">Support load</div></div>
+        <div class="tile"><div class="num">+27%</div><div class="muted">Lead conversion</div></div>
+        <div class="tile"><div class="num">5 min</div><div class="muted">Setup time</div></div>
+        <div class="tile"><div class="num">24×7</div><div class="muted">Availability</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases -->
+  <section id="use-cases">
+    <div class="container">
+      <h2 class="section-title">Popular use cases</h2>
+      <p class="section-sub">From instant support to proactive sales, Samadhan AI adapts to your workflow.</p>
+      <div class="usecases">
+        <div class="usecase reveal">
+          <h3>Customer Support</h3>
+          <p>Resolve FAQs, track orders, and raise tickets without making your team repeat themselves.</p>
+          <div class="row"><span class="chip">Zendesk</span><span class="chip">Freshdesk</span><span class="chip">Intercom</span></div>
+        </div>
+        <div class="usecase reveal">
+          <h3>Lead Qualification</h3>
+          <p>Capture email/phone, score intent, and route hot leads to WhatsApp in real time.</p>
+          <div class="row"><span class="chip">HubSpot</span><span class="chip">Zoho</span><span class="chip">Pipedrive</span></div>
+        </div>
+        <div class="usecase reveal">
+          <h3>Internal Knowledge</h3>
+          <p>Give your team a private AI assistant trained on policy docs and SOPs—secure and compliant.</p>
+          <div class="row"><span class="chip">Google Drive</span><span class="chip">Notion</span><span class="chip">Confluence</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing">
+    <div class="container">
+      <div class="row" style="justify-content:space-between; align-items:center">
+        <div>
+          <h2 class="section-title">Simple, transparent pricing</h2>
+          <p class="section-sub">Start free. Scale when you grow. Cancel anytime.</p>
+        </div>
+        <label class="switch">Monthly <input type="checkbox" id="billSwitch" aria-label="Toggle annual billing"> Yearly <span class="chip">Save 20%</span></label>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="card price-card reveal">
+          <div class="chip">Starter</div>
+          <h3 class="price-h">For trying things out</h3>
+          <div class="price"><span class="amt" data-monthly="₹0" data-yearly="₹0">₹0</span><span class="per">/mo</span></div>
+          <ul class="list">
+            <li><span class="ok">✓</span> 1 chatbot • 200 chats</li>
+            <li><span class="ok">✓</span> Website widget</li>
+            <li><span class="ok">✓</span> Basic analytics</li>
+          </ul>
+          <div style="height:12px"></div>
+          <a href="#contact" class="btn">Get started</a>
+        </div>
+
+        <div class="card price-card popular reveal">
+          <div class="chip" style="background:linear-gradient(135deg,var(--brand),var(--brand-2)); color:#041022; font-weight:800">Most Popular</div>
+          <h3 class="price-h">For growing teams</h3>
+          <div class="price"><span class="amt" data-monthly="₹1,499" data-yearly="₹1,199">₹1,499</span><span class="per">/mo</span></div>
+          <ul class="list">
+            <li><span class="ok">✓</span> 3 chatbots • 5k chats</li>
+            <li><span class="ok">✓</span> WhatsApp + Web</li>
+            <li><span class="ok">✓</span> CRM & ticketing</li>
+          </ul>
+          <div style="height:12px"></div>
+          <a href="#contact" class="btn primary">Start free trial</a>
+        </div>
+
+        <div class="card price-card reveal">
+          <div class="chip">Business</div>
+          <h3 class="price-h">For scale & compliance</h3>
+          <div class="price"><span class="amt" data-monthly="₹4,999" data-yearly="₹3,999">₹4,999</span><span class="per">/mo</span></div>
+          <ul class="list">
+            <li><span class="ok">✓</span> Unlimited sources</li>
+            <li><span class="ok">✓</span> SSO, audit logs</li>
+            <li><span class="ok">✓</span> Priority support</li>
+          </ul>
+          <div style="height:12px"></div>
+          <a href="#contact" class="btn">Talk to sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <h2 class="section-title">Frequently asked questions</h2>
+      <div class="faq">
+        <div class="faq-item">
+          <div class="faq-q">Can I connect my own OpenAI/LLM key? <span>＋</span></div>
+          <div class="faq-a">Yes. Bring‑your‑own‑key is supported for cost control and data governance.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Is the chatbot multilingual? <span>＋</span></div>
+          <div class="faq-a">Absolutely. Train in English and respond in Hindi or any supported language.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do you store customer data? <span>＋</span></div>
+          <div class="faq-a">You control retention policies. PII redaction and regional data hosting are available.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / Lead form -->
+  <section id="contact">
+    <div class="container grid-2">
+      <div>
+        <h2 class="section-title">Request a demo</h2>
+        <p class="section-sub">Tell us a bit about your business. We'll get back to you within one business day.</p>
+        <form class="form" id="leadForm" novalidate>
+          <div class="row" style="gap:12px">
+            <input type="text" id="name" name="name" placeholder="Your name" required>
+            <input type="email" id="email" name="email" placeholder="Email address" required>
+          </div>
+          <input type="tel" id="phone" name="phone" placeholder="Phone / WhatsApp">
+          <input type="text" id="company" name="company" placeholder="Company name">
+          <textarea id="message" name="message" rows="4" placeholder="What problem are you trying to solve?"></textarea>
+          <button class="btn primary" type="submit">Submit</button>
+          <div id="formMsg" aria-live="polite" style="color:var(--brand-2)"></div>
+        </form>
+      </div>
+      <div>
+        <div class="cta">
+          <div>
+            <h3 style="margin:0 0 6px">Need help integrating?</h3>
+            <p style="margin:0;color:var(--text)">We offer white‑glove setup, custom workflows, and team training.</p>
+          </div>
+          <a href="#" class="btn">View Docs</a>
+          <a href="#" class="btn">Book a Call</a>
+        </div>
+        <div style="height:14px"></div>
+        <div class="card">
+          <h3>Embed snippet</h3>
+          <p class="section-sub" style="margin-top:6px">Paste this before <code>&lt;/body&gt;</code> on your site to add the chat widget.</p>
+<pre style="white-space:pre-wrap;background:#0b1222;padding:12px;border-radius:12px;border:1px solid rgba(143,163,201,.25)"><code>&lt;script&gt;
+  window.samadhanAI = { widgetKey: "YOUR_PUBLIC_KEY" };
+&lt;/script&gt;
+&lt;script async src="https://cdn.example.com/samadhan-ai/widget.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="cta">
+      <h3 style="margin:0">Ready to put support on autopilot?</h3>
+      <a href="#contact" class="btn primary">Get Started</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container row" style="justify-content:space-between">
+      <div>© <span id="year"></span> Samadhan AI • Built in India 🇮🇳</div>
+      <div class="row">
+        <a class="chip" href="#">Privacy</a>
+        <a class="chip" href="#">Terms</a>
+        <a class="chip" href="#">Status</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Helper: smooth anchor scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        if(id.length>1){
+          e.preventDefault();
+          document.querySelector(id)?.scrollIntoView({behavior:'smooth', block:'start'});
+          // Close mobile menu on navigation
+          mobileMenu.style.display = 'none';
+        }
+      })
+    })
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn?.addEventListener('click', ()=>{
+      mobileMenu.style.display = mobileMenu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(item=>{
+      const q = item.querySelector('.faq-q');
+      const a = item.querySelector('.faq-a');
+      q.addEventListener('click', ()=>{
+        const open = a.style.display === 'block';
+        document.querySelectorAll('.faq-a').forEach(x=>x.style.display='none');
+        document.querySelectorAll('.faq-q span').forEach(x=>x.textContent='＋');
+        if(!open){ a.style.display='block'; q.querySelector('span').textContent='–'; }
+      })
+    })
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.animate([
+            {opacity:0, transform:'translateY(14px)'},
+            {opacity:1, transform:'translateY(0)'}
+          ], {duration:500, easing:'ease-out', fill:'forwards'});
+          io.unobserve(e.target);
+        }
+      })
+    }, {threshold:0.2});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // Billing toggle
+    const billSwitch = document.getElementById('billSwitch');
+    const amounts = document.querySelectorAll('.amt');
+    billSwitch?.addEventListener('change', ()=>{
+      amounts.forEach(el=>{
+        const monthly = el.getAttribute('data-monthly');
+        const yearly = el.getAttribute('data-yearly');
+        el.textContent = billSwitch.checked ? yearly : monthly;
+      })
+    });
+
+    // Form validation (demo only)
+    const form = document.getElementById('leadForm');
+    const msg = document.getElementById('formMsg');
+    form?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      if(!data.name || !data.email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)){
+        msg.style.color = '#ff8080';
+        msg.textContent = 'Please enter a valid name and email.';
+        return;
+      }
+      // Normally you'd POST to your API here.
+      msg.style.color = 'var(--brand-2)';
+      msg.textContent = 'Thanks! We\'ll get in touch shortly.';
+      form.reset();
+    });
+
+    // Year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
